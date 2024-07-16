@@ -3,7 +3,7 @@
 `This program is meant to be used to track and notify the user of electricity prices. It uses the API for a Finnish service, therefore the documentation and notifications will be in Finnish for this project.`
 
 Tämä ohjelma näyttää ilmoituksen, jossa näkyy tämänhetkinen pörssisähkön hinta.
-Voit ladata suoritettavan tiedoston [GitHub Releases sivulta](https://github.com/IamNanjo/porssisahkon-hinnan-ilmoittaja/releases/latest
+Voit ladata suoritettavan tiedoston [GitHub Releases sivulta](https://github.com/IamNanjo/porssisahkon-hinnan-ilmoittaja/releases/latest)
 
 Voit suorittaa koodin myös omalla [Bun](https://bun.sh) tai [Node.js](https://nodejs.org) asennuksellasi seuraavien komentojen avulla
 
