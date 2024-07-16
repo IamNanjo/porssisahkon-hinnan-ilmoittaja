@@ -1,7 +1,7 @@
 import notifier from "node-notifier";
 import fetchJSON from "./fetch.js";
 
-import type { APIPriceResponse, APILatestPricesResponse } from "./APITypes";
+import type { APILatestPricesResponse } from "./APITypes";
 
 function createNotification(message: string) {
   return notifier.notify({
@@ -11,46 +11,45 @@ function createNotification(message: string) {
   });
 }
 
-// Sisältää päivämäärään ja aikaan liittyvät tiedot
+// Sisältää päivämäärään ja aikaan liittyvät tiedot (tälle päivälle)
 const date = new Date();
 // Esim. 2024-07-16
-const today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate()}`;
+const today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 // Esim. 22
 const currentHour = `${date.getHours().toString().padStart(2, "0")}`;
+// Esim. 2024-07-17T21:00:00:000Z
+const dateString = `${today}T${currentHour}:00:00.000Z`;
 
 // Ohjelman suoritus async funktion sisällä
 (async () => {
   // Esimerkki funktion palauttamasta arvosta:
-  // [
-  //   {
-  //     prices: [
-  //       {
-  //         price: -0.28,
-  //         startDate: "2024-07-17T21:00:00:000Z",
-  //         endDate: "2024-07-17T22:00:00:000Z",
-  //       },
-  //       {
-  //         price: -0.085,
-  //         startDate: "2024-07-17T20:00:00:000Z",
-  //         endDate: "2024-07-17T21:00:00:000Z",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     price: 3.256,
-  //   },
-  // ];
-  const [currentPrice, latestPrices] = await Promise.all([
-    fetchJSON<APIPriceResponse>(
-      `https://api.porssisahko.net/v1/price.json?date=${today}&hour=${currentHour}`,
-    ),
-    fetchJSON<APILatestPricesResponse>("https://api.porssisahko.net/v1/latest-prices.json").then(
-      (data) => data.prices,
-    ),
-  ]).catch((err) => {
-    createNotification(err);
-    throw "";
-  });
+  // {
+  //   prices: [
+  //     {
+  //       price: -0.28,
+  //       startDate: "2024-07-17T21:00:00:000Z",
+  //       endDate: "2024-07-17T22:00:00:000Z",
+  //     },
+  //     {
+  //       price: -0.085,
+  //       startDate: "2024-07-17T20:00:00:000Z",
+  //       endDate: "2024-07-17T21:00:00:000Z",
+  //     },
+  //   ],
+  // }
+  const latestPrices = await fetchJSON<APILatestPricesResponse>(
+    "https://api.porssisahko.net/v1/latest-prices.json",
+  )
+    .then((data) => data.prices)
+    .catch((err) => {
+      createNotification(err);
+      throw "";
+    });
+
+  // Suodata vain tälle päivälle olevat hintatiedot
+  const currentPrices = latestPrices.filter((price) => price.startDate === dateString);
+  // Tämän päivän hintatiedot (jos suodatus onnistui)
+  const currentPrice = currentPrices.length > 0 ? currentPrices[0].price : null;
 
   const earliestDate = new Date(latestPrices[latestPrices.length - 1].startDate);
   const latestDate = new Date(latestPrices[0].endDate);
@@ -73,7 +72,7 @@ const currentHour = `${date.getHours().toString().padStart(2, "0")}`;
 
   // Luo ilmoitus
   createNotification(
-    `Tämänhetkinen hinta (${today} ${currentHour}:00):\t ${currentPrice.price} €
+    `Tämänhetkinen hinta (${today} ${currentHour}:00):\t ${currentPrice} €
 
 Hinta aikavälillä ${timeSpan}:\t
 Minimi:\t\t ${min} €
