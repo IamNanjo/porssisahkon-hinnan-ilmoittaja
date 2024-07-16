@@ -1,6 +1,7 @@
 {
   "name": "porssisahkon-hinnan-ilmoittaja",
   "description": "Näyttää pörssisähkön hinnan ilmoituksessa. Laskee myös pienimmän, suurimman ja keskiarvon 48 tunnin ajalta.",
+  "version": "1.0.0",
   "module": "index.ts",
   "type": "module",
   "license": "Unlicense",
