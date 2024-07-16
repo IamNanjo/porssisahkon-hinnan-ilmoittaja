@@ -54,8 +54,10 @@ const currentHour = `${date.getHours().toString().padStart(2, "0")}`;
 
   const earliestDate = new Date(latestPrices[latestPrices.length - 1].startDate);
   const latestDate = new Date(latestPrices[0].endDate);
+  // Esim. 17.7.2024 01:00 - 18.7.2024 01:00
   const timeSpan = `${earliestDate.getDate()}.${earliestDate.getMonth() + 1}.${earliestDate.getFullYear()} ${earliestDate.getHours().toString().padStart(2, "0")}:${earliestDate.getMinutes().toString().padStart(2, "0")} - ${latestDate.getDate()}.${latestDate.getMonth() + 1}.${latestDate.getFullYear()} ${latestDate.getHours().toString().padStart(2, "0")}:${latestDate.getMinutes().toString().padStart(2, "0")}`;
 
+  // Lista, joka sisältää vain hinnat
   const pricesOnly = latestPrices.map(({ price }) => price);
   let min = 0;
   let max = 0;
@@ -69,6 +71,7 @@ const currentHour = `${date.getHours().toString().padStart(2, "0")}`;
 
   avg /= pricesOnly.length;
 
+  // Luo ilmoitus
   createNotification(
     `Tämänhetkinen hinta (${today} ${currentHour}:00):\t ${currentPrice.price} €
 
