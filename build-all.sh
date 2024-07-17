@@ -4,4 +4,3 @@ cd $(dirname $0)
 
 bun build index.ts --compile --target=bun-linux-x64-modern --outfile dist/hinta-tarkkailija-linux-x64
 bun build index.ts --compile --target=bun-linux-arm64 --outfile dist/hinta-tarkkailija-linux-arm64
-bun build index.ts --compile --target=bun-windows-x64-modern --outfile dist/hinta-tarkkailija-windows-x64
