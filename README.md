@@ -20,7 +20,9 @@ bun index.ts
 
 Voit luoda suoritettavan tiedoston [Bun](https://bun.sh) avulla
 
-Voit hyödyntää tähän [build.sh](./build.sh) (linux) ja [build.cmd](./build.cmd) (windows) tiedostoja, tai voit suorittaa seuraavan komennon itse koodin hakemistossa, jonka jälkeen löydät suoritettavan tiedoston `dist` kansiosta.
+Voit hyödyntää tähän [build.sh](./build.sh) (linux) tiedostoa, tai voit suorittaa seuraavan komennon itse koodin hakemistossa, jonka jälkeen löydät suoritettavan tiedoston `dist` kansiosta.
+Suoritettavan tiedoston luominen Windows järjestelmissä vaatii enemmän työtä, koska Bun ei toimi kovinkaan hyvin Windows järjestelmissä.
+Muut työkalut, kuten [pkg](https://www.npmjs.com/package/pkg) toimivat, mutta ne vaativat manuaalista tiedostojen siirtoa, koska kaikkia tarvittavia tiedostoja ei voi sisällyttää .exe tiedostoon.
 
 ```bash
 bun build --compile index.ts --outfile dist/hinta-tarkkailija
