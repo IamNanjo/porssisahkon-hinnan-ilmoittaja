@@ -11,7 +11,7 @@ Lataa vaaditut moduulit ja luo suoritettava tiedosto seuraavilla komennoilla
 
 ```bash
 # Lataa vaaditut moduulit
-go get -u
+go get
 
 # Suorita ohjelma testataksesi toiminnan
 go run .
